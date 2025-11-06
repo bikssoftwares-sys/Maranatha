@@ -36,3 +36,30 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes zoom-in-out {
+  0%, 33% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  16.5% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  33%, 100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.animate-zoom-in-out {
+  animation: zoom-in-out 9s infinite;
+}
+
+.animation-delay-3000 {
+  animation-delay: 3s;
+}
+
+.animation-delay-6000 {
+  animation-delay: 6s;
+}
