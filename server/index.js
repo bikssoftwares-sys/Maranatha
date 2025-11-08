@@ -118,6 +118,31 @@ app.post('/api/events/:id/register', (req, res) => {
   });
 });
 
+// Update event (admin only)
+app.put('/api/events/:id', (req, res) => {
+  const eventId = req.params.id;
+  const { title, description, date, location, max_participants } = req.body;
+
+  const query = 'UPDATE events SET title = ?, description = ?, date = ?, location = ?, max_participants = ? WHERE id = ?';
+  db.execute(query, [title, description, date, location, max_participants, eventId], (err, result) => {
+    if (err) return res.status(500).json({ error: 'Database error' });
+    if (result.affectedRows === 0) return res.status(404).json({ error: 'Event not found' });
+    res.json({ message: 'Event updated successfully' });
+  });
+});
+
+// Delete event (admin only)
+app.delete('/api/events/:id', (req, res) => {
+  const eventId = req.params.id;
+
+  const query = 'DELETE FROM events WHERE id = ?';
+  db.execute(query, [eventId], (err, result) => {
+    if (err) return res.status(500).json({ error: 'Database error' });
+    if (result.affectedRows === 0) return res.status(404).json({ error: 'Event not found' });
+    res.json({ message: 'Event deleted successfully' });
+  });
+});
+
 // Admin login
 app.post('/api/admin/login', async (req, res) => {
   const { username, password } = req.body;
